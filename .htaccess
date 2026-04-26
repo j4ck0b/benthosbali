@@ -1,0 +1,7 @@
+# Protege archivos sensibles
+<Files ".env">
+    Require all denied
+</Files>
+<Files "config.php">
+    Require all denied
+</Files>

@@ -1,0 +1,112 @@
+/* ============================
+   RESPONSIVE GENERAL (MÓVIL)
+   ============================ */
+
+/* Mobile view optimization for Layered UX */
+@media (max-width: 900px) {
+  
+  .trust-bar {
+    margin: 20px 15px !important;
+    padding: 25px 20px !important;
+    border-radius: 24px !important;
+    max-width: none !important;
+    width: auto !important;
+    gap: 15px !important;
+    justify-content: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .white-widget {
+    margin: 20px 15px !important;
+    padding: 40px 20px !important;
+    border-radius: 24px !important;
+    gap: 40px !important;
+    width: auto !important;
+  }
+
+  .experience-section {
+    padding: 60px 20px !important;
+    border-radius: 24px !important;
+    margin: 20px 15px !important;
+  }
+
+  .faq-card {
+    padding: 40px 20px !important;
+    border-radius: 24px !important;
+    margin: 0 15px !important;
+  }
+
+  .team-widget {
+    padding: 60px 20px !important;
+    border-radius: 24px !important;
+    margin: 20px 15px !important;
+    gap: 30px !important;
+  }
+
+  /* --- TARJETAS WHITE-INNER --- */
+  .white-inner,
+  .white-inner.reverse {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .white-inner.reverse .big-image {
+    order: -1 !important;
+  }
+
+  .white-inner .big-image {
+    height: 250px !important;
+    border-radius: 16px !important;
+  }
+
+  .whatsapp-btn {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    cursor: pointer;
+    z-index: 1200;
+    transition: transform 0.2s ease, opacity 0.4s ease;
+  }
+
+  .white-inner .white-text {
+    padding: 0 !important;
+    gap: 12px !important;
+  }
+
+  .white-inner .white-text h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* LOGO MOBILE */
+  .logo {
+    height: 40px !important;
+  }
+
+  /* HERO */
+  .hero h1 {
+    font-size: 1.8rem !important;
+    padding: 0 10px;
+  }
+  .hero h3 {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .trust-item img {
+    height: 40px !important;
+  }
+  .trust-item {
+    font-size: 0.9rem !important;
+  }
+  .cta-large {
+    font-size: 1.1rem !important;
+    padding: 12px 24px !important;
+  }
+  .site-footer {
+    padding-bottom: 80px !important;
+  }
+}

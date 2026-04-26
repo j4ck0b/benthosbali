@@ -1,0 +1,1644 @@
+:root {
+  --header-h: 80px;
+  --accent: #0077be;
+  --accent-dark: #005a8d;
+  --text-dark: #1a1a1a;
+  --text-light: #5a5a5a;
+  --bg-light: #f9fbfd;
+  --shadow-soft: 0 10px 30px rgba(0, 119, 190, 0.1);
+  --shadow-strong: 0 15px 45px rgba(0, 0, 0, 0.15);
+  --shadow-pop: 0 20px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  --max-width: 1200px;
+  --border-radius: 24px;
+  --bg-gradient: linear-gradient(180deg, #f0f4f8 0%, #d9e2ec 100%);
+}
+
+/* Basic Reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-dark);
+  line-height: 1.6;
+  background-color: #f0f4f8;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(0, 119, 190, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 119, 190, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+  transition: background-color 0.4s ease;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(0px);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.menu-open::before {
+  opacity: 1;
+  pointer-events: auto;
+  backdrop-filter: blur(8px);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* HEADER */
+.site-header{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:var(--header-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 20px;
+  z-index:1000;
+  background: rgba(255,255,255,0.06); /* transparent */
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 18px var(--shadow);
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.header-right {
+  justify-content: flex-end;
+}
+
+
+/* modern hamburger menu button with 3D depth */
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow-pop);
+  z-index: 1100;
+  position: relative;
+}
+
+.menu-btn span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background-color: #111;
+  transition: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  border-radius: 4px;
+}
+
+.menu-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.menu-btn:active {
+  transform: translateY(-1px) scale(0.95);
+}
+
+.menu-btn.is-active {
+  background: var(--accent);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.menu-btn.is-active span {
+  background-color: #fff;
+}
+
+/* Transform to X when active */
+.menu-btn.is-active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-btn.is-active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px) scale(0);
+}
+
+.menu-btn.is-active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* dropdown menu with "pop-out" animation */
+.dropdown {
+  position: absolute;
+  top: calc(var(--header-h) + 16px);
+  left: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(25px);
+  border-radius: 24px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+  display: none;
+  min-width: 280px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transform: scale(0.8) translateY(-20px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: top left;
+}
+
+.dropdown.is-visible {
+  display: block;
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 12px;
+}
+
+.dropdown li {
+  margin-bottom: 4px;
+}
+
+.dropdown li a {
+  display: block;
+  padding: 16px 24px;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.dropdown li a:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateX(8px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 119, 190, 0.2);
+}
+
+/* center logo */
+.logo {
+    height: 60px;
+    width: auto;
+    opacity: 1;
+    transition: transform 0.3s;
+}
+.logo:hover {
+    transform: scale(1.02);
+}
+
+
+
+/* language buttons */
+.lang-btn{background:transparent;border:none;font-size:20px;margin-left:8px;cursor:pointer}
+.lang-btn:focus{outline:2px solid var(--accent)}
+
+/* Language Dropdown */
+.lang-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-selected {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+   color: inherit; /* importante: que tome el color de .lang-selected */
+}
+
+.lang-selected .arrow {
+  color: black;       /* flecha negra */
+  font-size: 14px;    /* tamaño adecuado */
+  opacity: 0.8;       /* opcional: ligera transparencia */
+  margin-left: 4px;   /* separación de la bandera */
+}
+
+.lang-selected:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.arrow {
+  font-size: 14px;
+  color: #000;
+  opacity: 0.8;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.lang-selected:hover .arrow {
+  transform: translateY(-2px); /* ligera elevación al pasar el ratón */
+  opacity: 1;                  /* más visible al hover */
+}
+.flag-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  object-fit: cover;
+  margin-right: 6px;
+}
+
+/* Tamaño uniforme de banderas */
+.flag-icon {
+  width: 24px;
+  height: 16px; /* proporción horizontal estándar */
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+/* Botón principal */
+.lang-selected {
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(4px);
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 16px;
+  min-width: 70px; /* evita que se deforme */
+}
+.lang-selected img {
+  display: block;
+}
+
+/* Menú desplegable de idiomas */
+.lang-options {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #ffffff !important;  /* fondo blanco sólido */
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  min-width: 140px;
+  z-index: 999;
+  backdrop-filter: none !important; /* quitar cualquier blur */
+}
+
+/* Mostrar el menú al pasar el mouse */
+.lang-dropdown:hover .lang-options {
+  display: flex;
+}
+
+/* Opciones individuales */
+.lang-option {
+  background: transparent;         
+  border: none;
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #000 !important;        
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease;
+}
+
+/* Hover de cada opción */
+.lang-option:hover {
+  background-color: #f0f0f0 !important;  /* gris sutil al pasar el ratón */
+}
+
+/* Bandera */
+.lang-option .flag-icon {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.lang-selected {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 18px;
+}
+.lang-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown panel */
+.lang-options {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  min-width: 120px;
+  z-index: 999;
+}
+
+.lang-option {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  text-align: left;
+  width: 100%;
+  padding: 6px 14px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.lang-option:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* HERO slides - fullscreen */
+.hero {
+  min-height: 100svh; /* mejor que height:100svh para evitar bugs en móvil */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenedor del slider */
+.slides {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Cada slide ocupa toda la pantalla */
+.slide {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Imagen ajustada a pantalla */
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Transición del movimiento */
+#slides {
+  transition: transform 0.8s ease-in-out;
+}
+
+
+
+
+
+/* overlay content */
+.hero-overlay{
+  position:relative;
+  z-index:5;
+  text-align:center;
+  color:white;
+  text-shadow:0 6px 18px rgba(0,0,0,0.5);
+  padding:8vh 16px;
+  pointer-events:none;
+}
+.hero-overlay h1{
+  font-size:clamp(28px,5vw,56px);
+  margin-bottom:16px;
+  pointer-events:auto;
+}
+.hero-overlay h3{
+  font-size:clamp(16px,2.2vw,22px);
+  margin-bottom:18px;
+  font-weight:500;
+  pointer-events:auto;
+}
+.cta{cursor:pointer;pointer-events:auto;padding:12px 20px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700}
+.cta-large{padding:12px 24px; font-size: clamp(18px,3vw,28px);}
+.cta-medium{font-size:16px;padding:8px 16px}
+.cta-small{font-size:14px;padding:6px 12px}
+
+/* ==========================
+   WHITE WIDGET GRID — 2 COLUMNAS
+========================== */
+
+.white-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  max-width: var(--max-width);
+  margin: -80px auto 100px;
+  padding: 80px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 40px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 10;
+}
+
+/* Cada tarjeta interna usa grid de 2 columnas */
+.white-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Segunda tarjeta invertida: texto izquierda, imagen derecha */
+.white-inner.reverse {
+  grid-template-areas: "text image";
+}
+.white-inner:not(.reverse) {
+  grid-template-areas: "image text";
+}
+
+/* Asignamos las áreas */
+.white-inner .big-image {
+  grid-area: image;
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.white-inner .white-text {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Botón debajo del texto */
+.trust-bar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 30px 40px;
+  text-align: center;
+  border-radius: 100px;
+  max-width: 1000px;
+  margin: -50px auto 40px;
+  position: relative;
+  z-index: 20;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 119, 190, 0.1);
+}
+
+.trust-item img {
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  opacity: 1;
+  transition: transform 0.3s ease;
+}
+
+.trust-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Estilo base para todos los botones "cta" */
+.cta {
+  background: linear-gradient(135deg, var(--accent) 0%, #00a8ff 100%);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 119, 190, 0.3);
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 119, 190, 0.4);
+}
+
+.cta:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+.cta::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cta:hover::after {
+  left: 100%;
+  opacity: 1;
+}
+
+.cta-secondary {
+  background: white;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  box-shadow: none;
+}
+
+.cta-secondary:hover {
+  background: var(--accent);
+  color: white;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .trust-bar {
+    margin: 20px 15px;
+    padding: 25px 20px;
+    border-radius: 24px;
+    max-width: none;
+  }
+
+  .white-widget {
+    margin: 20px 15px;
+    padding: 40px 20px;
+    border-radius: 24px;
+    gap: 40px;
+  }
+
+  .white-inner,
+  .white-inner.reverse {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .white-inner .big-image,
+  .white-inner .white-text {
+    width: 100%;
+  }
+
+  .white-inner .big-image {
+    height: 300px;
+  }
+
+  .white-inner .white-text h2,
+  .white-inner .white-text p {
+    text-align: center;
+  }
+
+  .white-inner .buttons-row {
+    justify-content: center;
+    margin-top: 12px;
+  }
+}
+
+
+/* gallery carrusell */
+.gallery-widget {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.gallery-carousel {
+  max-width: 1100px;
+  margin: 18px auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.g-track {
+  display: flex;
+  overflow: hidden;
+  width: 80%;
+  scroll-behavior: smooth;
+  gap: 0; /* Importante para evitar que se vean 2 imágenes */
+}
+
+.g-track img {
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.g-prev, .g-next {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  font-size: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gallery-widget {
+  max-width: 1200px;      /* límite de ancho */
+  margin: 0 auto;         /* centra horizontalmente */
+  padding: 48px 20px;     /* espacio alrededor */
+  text-align: center;     /* centra el título h2 */
+}
+
+.gallery-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centra los botones y el track */
+  gap: 10px;
+}
+
+.gallery-carousel .g-track {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;       /* ajusta el ancho visible del carrusel */
+  border-radius: 8px;
+}
+
+/* Botones */
+.g-prev, .g-next {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  font-size: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+
+/* BOTÓN GOOGLE REVIEWS FLOTANTE */
+#google-review-btn {
+  position: fixed;
+  bottom: 100px;
+  left: 20px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  cursor: pointer;
+  z-index: 9999;
+
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.4s ease, transform 0.35s ease;
+
+  min-width: 180px;         /* ← Botón MÁS largo */
+  justify-content: flex-start;
+}
+
+#google-review-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ícono Google */
+#google-review-btn .gr-icon {
+  width: 40px;              /* ← Más grande y visible */
+  height: 40px;
+  flex-shrink: 0;           /* El ícono mantiene su tamaño */
+  object-fit: contain;
+}
+
+/* Contenedor del texto */
+#google-review-btn .gr-info {
+  flex: 1;                  /* ← Esto hace que se expanda a lo ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+/* Estrellas */
+#google-review-btn .gr-stars {
+  color: #fbbc05;
+  font-size: 20px;          /* Un poco más grande */
+  margin-bottom: 3px;
+}
+
+/* Texto de reseñas */
+#google-review-btn .gr-count {
+  font-size: 14px;
+  color: #444;
+}
+
+/* TEAM WIDGET */
+.team-widget {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  padding: 100px 40px;
+  max-width: var(--max-width);
+  margin: 80px auto;
+  background: white;
+  border-radius: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+}
+
+.team-image {
+  flex: 1;                   /* ocupa mitad izquierda */
+}
+
+.team-image img {
+  width: 100%;
+  height: 400px;             /* altura fija más razonable que 80vh */
+  object-fit: cover;         /* recorta manteniendo proporción */
+  border-radius: 8px;        /* opcional: esquinas redondeadas */
+}
+
+.team-text {
+  flex: 1;                   /* ocupa mitad derecha */
+  max-width: 600px;
+  text-align: left;          /* texto alineado a la izquierda */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.team-text h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.team-text p {
+  line-height: 1.6;
+  font-weight: 400;
+  color: #222;
+}
+
+.experience-section {
+  padding: 120px 20px;
+  background: #0f1720;
+  color: white;
+  border-radius: 60px;
+  margin: 0 auto 100px;
+  max-width: var(--max-width);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 5;
+}
+
+.faq-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 60px;
+  border-radius: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+}
+
+#faq {
+  padding: 120px 20px;
+  background: transparent;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .team-widget {
+    flex-direction: column;  /* imagen arriba, texto abajo */
+    text-align: center;
+  }
+  .team-image img {
+    height: 250px;           /* altura más baja en móviles */
+  }
+  .team-text {
+    align-items: center;
+    text-align: center;
+  }
+  .team-text button {
+    align-self: center;
+  }
+}
+
+
+/* Social */
+
+.socials-widget {
+  padding: 20px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;   
+  height: 50px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.social:hover {
+  transform: scale(1.1); /* ligero zoom al pasar el ratón */
+}
+
+.social-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+/* contact */
+.contact-widget{padding:10px 10px;background:#fafafa}
+.contact-widget h3 {
+  text-align: center;
+  font-size: 1.8rem;   /* opcional: tamaño más grande */
+  margin-bottom: 20px; /* separación respecto al formulario */
+}
+.contact-form{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.contact-form label{display:flex;flex-direction:column;font-weight:600}
+.contact-form input,.contact-form textarea{padding:10px;border-radius:8px;border:1px solid #ddd}
+
+/* footer */
+.site-footer{background:#0f1720;color:#fff;padding:24px 20px}
+.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+
+
+
+/* whatsapp */
+.whatsapp-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  cursor: pointer;
+  z-index: 1200;
+  opacity: 1;
+  transition: transform 0.2s ease, opacity 0.4s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1); /* ligero zoom al pasar el ratón */
+}
+
+.whatsapp-logo {
+  width: 60px;  /* tamaño más grande */
+  height: 60px; /* mantener proporción */
+  display: block;
+}
+
+/* responsive tweaks */
+@media (max-width:800px){
+  .g-track img{width:140px;height:100px}
+  .hero-overlay h1{font-size:28px}
+  .logo{height:36px}
+  .header-right{gap:6px}
+  .dropdown{left:8px}
+}
+
+/* FORMULARIO CONTACTO */
+.contact-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 40px;
+  padding: 80px 40px;
+  max-width: var(--max-width);
+  margin: 80px auto;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.location-widget {
+  background: white;
+  border-radius: 40px;
+  padding: 80px 40px;
+  max-width: var(--max-width);
+  margin: 80px auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.contact-form {
+    max-width: 600px;
+    background: #ffffffdd;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #0004;
+    backdrop-filter: blur(6px);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    margin: 10px 0 20px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.contact-form textarea {
+    height: 140px;
+    resize: none;
+}
+
+.hidden-field {
+    display: none;
+}
+
+/* Scroll Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered reveal for children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.reveal-stagger.active > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.active > *:nth-child(1) { transition-delay: 0.1s; }
+.reveal-stagger.active > *:nth-child(2) { transition-delay: 0.2s; }
+.reveal-stagger.active > *:nth-child(3) { transition-delay: 0.3s; }
+.reveal-stagger.active > *:nth-child(4) { transition-delay: 0.4s; }
+.thankyou-wrapper {
+    margin-top: 160px;
+    display: flex;
+    justify-content: center;
+}
+
+.thankyou-card {
+    background: #ffffffdd;
+    padding: 60px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 600px;
+    box-shadow: 0 0 25px #0003;
+}
+
+
+
+
+/* Contenedor de logos padi ssi */
+.footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0; /* elimina espacio extra */
+  padding: 0;
+}
+
+/* Logo PADI en el footer */
+.social.padi {
+  background: transparent;   /* sin fondo */
+  padding: 0;
+}
+
+.padi-logo {
+  height: 70px;              /* ajusta tamaño */
+  width: auto;
+  display: block;
+}
+
+
+ /* Para mi hotel.html que quire bien el hero de la imagen */
+.hero-fixed {
+  background-image: url("multimedia/hotel/hotel5.webp");
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* o menos si quieres */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-fixed .hero-overlay {
+  color: white;
+  text-align: center;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  padding: 40px;
+  border-radius: 12px;
+}
+
+/* Hotel intro: dos columnas de texto sin solaparse */
+#hotel-intro .white-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* dos columnas iguales */
+  gap: 40px;
+  align-items: start;
+}
+
+/* Evitar que ambos bloques usen la misma grid-area */
+#hotel-intro .white-text {
+  grid-area: auto; /* sobrescribe el grid-area:text global */
+  text-align: left;
+  background: #fff;          /* opcional: fondo blanco */
+  padding: 20px;             /* opcional: espacio interno */
+}
+
+/* titulo de hotel.html de benthos bali dive resort */
+#titulo-benthos {
+  text-align: center;     /* centra el texto */
+  width: 100%;            /* ocupa todo el ancho */
+  margin: 0 auto 40px;    /* lo centra y añade separación abajo */
+  font-size: 2.2rem;      /* opcional: tamaño más grande */
+  font-weight: 700;       /* opcional: más destacado */
+  margin-bottom: 10px; /* reduce la separación hacia abajo */
+}
+/* Responsive: en móvil se apilan */
+@media (max-width: 900px) {
+  #hotel-intro .white-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Sección ubicación para mapa contactos */
+.location-widget {
+  padding: 40px 20px;
+  text-align: center;
+  background: #fafafa;
+}
+
+.location-widget h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.location-widget p {
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.map-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.map-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%); /* justo encima del marcador */
+  width: 60px;
+  height: 60px;
+}
+
+.map-logo img {
+  width: 100%;
+  height: auto;
+}
+
+
+/* Hero cabecera para contacto.html */
+.contact-hero {
+  background-image: url("multimedia/bentos_diving_2.jpg"); /* ajusta extensión */
+  background-size: cover;
+  background-position: center;
+  height: 90vh; /* ocupa parte de la pantalla, no todo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.contact-hero .hero-overlay {
+  color: white;
+  text-align: center;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  padding: 40px;
+  border-radius: 12px;
+}
+
+
+/* hotel.html el grid de las habitaciones */
+#habitaciones .white-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  text-align: center;
+}
+
+#habitaciones .room h4 {
+  margin-top: 16px;
+  font-size: 1.4rem;
+}
+
+#habitaciones .room p {
+  margin-top: 8px;
+  line-height: 1.5;
+  color: #444;
+}
+#habitaciones .white-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start; /* fuerza que ambas columnas empiecen arriba */
+}
+.section-title {
+  text-align: center;
+  margin-bottom: 20px; /* controla la separación hacia abajo */
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.buttons-row {
+  grid-column: 1 / -1;       /* hace que ocupe todo el ancho del grid */
+  display: flex;
+  justify-content: center;   /* centra horizontalmente el contenido */
+  margin-top: 20px;          /* separación respecto a lo de arriba */
+}
+
+
+
+/* inmersiones.html*/
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.gallery-item {
+  text-align: center;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery-item h3 {
+  margin-top: 16px;
+  font-size: 1.2rem;
+}
+
+.gallery-item p {
+  margin: 8px 0;
+  color: #444;
+}
+
+.gallery-item .cta {
+  margin-top: 12px;
+  display: inline-block;
+}
+
+
+
+/* seleccion de cursos, cursos.html */
+
+.courses-section {
+  display: flex;
+  flex-wrap: wrap; /* permite que se acomoden en móvil */
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.courses-title {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #003049; /* ajusta según tu paleta */
+}
+
+.course-card {
+  max-width: 250px;
+}
+
+.course-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%; /* círculo perfecto */
+  margin-bottom: 1rem;
+
+}
+
+.course-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.course-card p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+
+ /* cursos.html para ir a la seccion pro */
+
+.pro-section {
+  background-image: url("multimedia/mantabanner.jpg"); /* tu imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  height: 50vh; /* ajusta la altura según lo que quieras */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+}
+
+.pro-overlay {
+
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.pro-overlay h2 {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+
+/* cursos-profesionales.html seccion dive master */
+
+.divemaster-section {
+  background: #fafafa; /* fondo claro, puedes cambiar a imagen si quieres */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.divemaster-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.divemaster-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #003049; /* tono marino, ajusta según tu paleta */
+}
+
+.divemaster-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  color: #333;
+}
+
+.divemaster-content .cta {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: rgba(0,0,0,0.8); /* negro con transparencia */
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.divemaster-content .cta:hover {
+  background-color: rgba(0,0,0,0.6);
+  transform: translateY(-2px);
+}
+
+
+
+/* cursos-profesionales.html seccion de instructores 2026 */
+
+.instructor-section {
+  padding: 60px 20px;
+  background: #fff; /* fondo claro, puedes cambiar */
+}
+
+.instructor-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* dos columnas iguales */
+  gap: 40px;
+  align-items: center;
+}
+
+.instructor-image img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.instructor-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #003049; /* tono marino */
+}
+
+.instructor-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Responsive: en móvil se apilan */
+@media (max-width: 900px) {
+  .instructor-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .instructor-image img {
+    height: 250px;
+  }
+}
+
+
+
+/* Secciones de sobrenosotros.html */
+.mission-section,
+.instructors-section,
+.equipment-section {
+  padding: 60px 20px;
+  background: #fafafa;
+}
+
+/* Sección Partners en seccion sobrenosotros.html */
+.partners-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f8f8f8; /* suave, elegante */
+}
+
+.partners-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* Contenedor de logos */
+.partners-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px; /* separación entre logos */
+  flex-wrap: wrap; /* para que en móvil se adapten */
+}
+
+/* Cada logo */
+.partner-item img {
+  height: 100px;       /* tamaño que pediste */
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  filter: grayscale(20%); /* toque elegante */
+}
+
+/* Hover */
+.partner-item:hover img {
+  transform: scale(1.1);
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+
+
+/* Layout de dos columnas para misión, instructores y equipamiento */
+.mission-inner,
+.instructors-inner,
+.equipment-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* Imagenes */
+.mission-image img,
+.instructors-image img,
+.equipment-image img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Títulos */
+.mission-text h2,
+.instructors-text h2,
+.equipment-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #003049;
+}
+
+/* Párrafos */
+.mission-text p,
+.instructors-text p,
+.equipment-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Responsive: en móvil se apilan */
+@media (max-width: 900px) {
+  .mission-inner,
+  .instructors-inner,
+  .equipment-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .mission-image img,
+  .instructors-image img,
+  .equipment-image img {
+    height: 250px;
+  }
+}
+
+
+/* Padangbai.html */
+.dive-section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.dive-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.dive-item.text-left .dive-text {
+  order: 1;
+  flex: 1;
+  padding-right: 20px;
+}
+
+.dive-item.text-left .dive-image {
+  order: 2;
+  flex: 1;
+}
+
+.dive-item.text-right .dive-image {
+  order: 1;
+  flex: 1;
+}
+
+.dive-item.text-right .dive-text {
+  order: 2;
+  flex: 1;
+  padding-left: 20px;
+}
+
+.dive-text h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #004d61; /* tono marino */
+}
+
+.dive-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.dive-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .dive-item {
+    flex-direction: column;
+  }
+  .dive-text, .dive-image {
+    order: unset;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+.dive-cta {
+  text-align: center;
+  margin: 50px 0;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.dive-cta h2 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: black; /* ajusta al color de tu branding */
+}
+
+.dive-cta p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.dive-cta .btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #0077b6; /* mismo color que tus otros botones */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.dive-cta .btn:hover {
+  background-color: #005f87; /* tono más oscuro al pasar el mouse */
+}

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Disallow sensitive folders
+Disallow: /vendor/
+Disallow: /PHPMailer/
+Disallow: /js/
+Disallow: /multimedia/
+
+# Sitemap location
+Sitemap: https://benthosbali.com/sitemap.xml
