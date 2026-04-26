@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benthos Bali Resort | Diving & Accommodation</title>
+    
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C8N1D03XB4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-C8N1D03XB4');
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HEADER - EXACT STRUCTURE -->
+    <header class="site-header">
+        <div class="header-left">
+            <button id="menuToggle" class="menu-btn" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav id="mainMenu" class="dropdown" style="display:none;">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="diving.html">Diving</a></li>
+                    <li><a href="accommodation.html">Accommodation</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="contacto.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="header-center">
+            <a href="index.html">
+                <img src="/multimedia/logobg.png" alt="Benthos Bali Logo" class="logo">
+            </a>
+        </div>
+
+        <div class="header-right">
+            <div class="lang-dropdown">
+                <button class="lang-selected">
+                    <img src="/multimedia/englishflag.png" alt="English" class="flag-icon">
+                    <span class="arrow">▼</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO - EXACT SCREENSHOT LOOK -->
+        <section class="hero-fixed" style="background-image: url('/multimedia/hotel/hotel5.webp');">
+            <div class="hero-overlay">
+                <h1>Descubre nuestro resort</h1>
+                <h3>comodidad y relax después del buceo</h3>
+                <a href="contacto.html" class="cta-large" data-track data-track-label="Hero Reserva">Reserva tu estancia</a>
+            </div>
+        </section>
+
+        <!-- Main Content Sections -->
+        <section class="container" style="padding: 80px 0;">
+            <div class="white-widget">
+                <div class="white-image">
+                    <img src="/multimedia/diving/bentos_diving_1.jpg" alt="Scuba Diving Bali">
+                </div>
+                <div class="white-text">
+                    <h2>World Class Diving</h2>
+                    <p>Experience the best dive sites in Bali with our professional team.</p>
+                    <a href="diving.html" class="cta-large" style="font-size: 20px; padding: 12px 30px;">View Diving</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FLOATING ELEMENTS -->
+    <a href="https://wa.me/34681815854" class="whatsapp-btn" data-track data-track-action="whatsapp_click">
+        <img src="/multimedia/wa.png" alt="WhatsApp" class="whatsapp-logo">
+    </a>
+
+    <div id="google-review-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" style="height: 24px;">
+        <div class="gr-info">
+            <div class="gr-stars" style="color: #fbbc05;">★★★★★</div>
+            <div class="gr-count" style="font-size: 12px; color: #666;">reviews</div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

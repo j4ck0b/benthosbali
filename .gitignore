@@ -2,3 +2,7 @@
 vendor/
 error_log
 .DS_Store
+node_modules/
+dist/
+*.log
+composer.lock
